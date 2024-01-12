@@ -1,29 +1,30 @@
-export enum Direction {
-    Left = 1,
-    Right = 2,
-    Up = 3,
-    Down = 4,
+import { getComponentValue } from "@dojoengine/recs";
+import { getEntityIdFromKeys } from "@dojoengine/utils";
+import { shortString } from "starknet";
+
+export const getShader = (manager: any, vertex_length: number, frag_length:number) => {
+    let vertex_shader = "";
+    let frag_shader = "";
+
+
+    for(let i = 0; i < vertex_length; i++) {
+        let vertex_manager_id = getEntityIdFromKeys([BigInt(0), BigInt(i)])
+        let value = getComponentValue(manager, vertex_manager_id)
+        console.log(value)
+        let string = value ? shortString.decodeShortString(value.value) : ""
+        console.log(string)
+        vertex_shader += string;
+    }
+    for(let i = 0; i < frag_length; i++) {
+        let frag_manager_id = getEntityIdFromKeys([BigInt(1), BigInt(i)])
+        let value = getComponentValue(manager, frag_manager_id)
+        let string = value ? shortString.decodeShortString(value.value) : ""
+        frag_shader += string;
+    }
+
+
+
+    return {vertex_shader, frag_shader}
+
 }
 
-export function updatePositionWithDirection(
-    direction: Direction,
-    value: { vec: { x: number; y: number } }
-) {
-    switch (direction) {
-        case Direction.Left:
-            value.vec.x--;
-            break;
-        case Direction.Right:
-            value.vec.x++;
-            break;
-        case Direction.Up:
-            value.vec.y--;
-            break;
-        case Direction.Down:
-            value.vec.y++;
-            break;
-        default:
-            throw new Error("Invalid direction provided");
-    }
-    return value;
-}
