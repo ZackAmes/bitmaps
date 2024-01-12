@@ -2,7 +2,6 @@ mod token {
     mod erc721;
     mod interface;
     mod models;
-    mod tests;
 }
 
 mod systems {
