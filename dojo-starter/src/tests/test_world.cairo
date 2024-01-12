@@ -12,6 +12,8 @@ mod tests {
     use alexandria_encoding::base64::Base64FeltEncoder;
     use alexandria_bytes::Bytes;   
     use alexandria_bytes::BytesTrait;
+    use alexandria_bytes::utils::u8_array_to_u256;   
+
 
     use dojo_starter::tests::utils;
     use dojo_starter::tests::constants::{
@@ -121,9 +123,7 @@ mod tests {
     #[test]
     #[available_gas(30000000)]
     fn test_base64() {
-
         let mut bm = Base64FeltEncoder::encode('BM');
-        let mut bytes: Bytes = BytesTrait::new(0, ArrayTrait::new());
-        let hash = bytes.keccak();
+
     }
 }
